@@ -3,35 +3,48 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ListResponseModel } from '../models/listResponseModel';
 import { Rental } from '../models/rental';
-import { RentalDetail } from '../models/rentalDetail';
+import { RentalNormal } from '../models/rentalNormal';
 import { ResponseModel } from '../models/responseModel';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RentalService {
-  apiUrl="https://localhost:44349/api/rentals/"
-  constructor(private httpClient:HttpClient) { }
+  apiUrl = 'https://localhost:44349/api/';
+  constructor(private httpClient: HttpClient) {}
 
-  getRentalsDetails(): Observable<ListResponseModel<RentalDetail>>{
-    return  this.httpClient.get<ListResponseModel<RentalDetail>>(this.apiUrl+"getalldetails")
+  getRentalsDetails(): Observable<ListResponseModel<Rental>> {
+    return this.httpClient.get<ListResponseModel<Rental>>(
+      this.apiUrl + 'rentals/getalldetails'
+    );
+  }
+  getRentalByCarId(carId: number): Observable<ListResponseModel<Rental>> {
+    return this.httpClient.get<ListResponseModel<Rental>>(
+      this.apiUrl + 'rentals/getdetailsbycarid?id=' + carId
+    );
+  }
+  getRentals(): Observable<ListResponseModel<RentalNormal>> {
+    return this.httpClient.get<ListResponseModel<RentalNormal>>(
+      this.apiUrl + 'rentals/getall'
+    );
+  }
 
+  addRental(rental: RentalNormal): Observable<ResponseModel> {
+    return this.httpClient.post<ResponseModel>(
+      this.apiUrl + 'rentals/add',
+      rental
+    );
   }
-  getRentalByCarId(carId:number): Observable<ListResponseModel<RentalDetail>>{
-    return  this.httpClient.get<ListResponseModel<RentalDetail>>(this.apiUrl+"getdetailsbycarid?id="+carId)
-
+  updateRental(rental: RentalNormal): Observable<ResponseModel> {
+    return this.httpClient.post<ResponseModel>(
+      this.apiUrl + 'rentals/update',
+      rental
+    );
   }
-  getRentals():Observable<ListResponseModel<Rental>>{
-    return this.httpClient.get<ListResponseModel<Rental>>(this.apiUrl+"getall")
-  }
-
-  addRental(rental:Rental):Observable <ResponseModel>{
-    return this.httpClient.post<ResponseModel>(this.apiUrl+"add",rental)
-  }
-  updateRental(rental:Rental):Observable <ResponseModel>{
-    return this.httpClient.post<ResponseModel>(this.apiUrl+"update",rental)
-  }
-  deleteRental(rental:Rental):Observable <ResponseModel>{
-    return this.httpClient.post<ResponseModel>(this.apiUrl+"delete",rental)
+  deleteRental(rental: RentalNormal): Observable<ResponseModel> {
+    return this.httpClient.post<ResponseModel>(
+      this.apiUrl + 'rentals/delete',
+      rental
+    );
   }
 }

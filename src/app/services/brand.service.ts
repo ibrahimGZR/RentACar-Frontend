@@ -10,26 +10,26 @@ import { SingleResponseModel } from '../models/singleResponseModel';
   providedIn: 'root',
 })
 export class BrandService {
-  apiUrl = 'https://localhost:44349/api/brands/';
+  apiUrl = 'https://localhost:44349/api/';
   constructor(private httpClient: HttpClient) {}
 
   getBrands(): Observable<ListResponseModel<Brand>> {
     return this.httpClient.get<ListResponseModel<Brand>>(
-      this.apiUrl + 'getall'
+      this.apiUrl + 'brands/getall'
     );
   }
   getBrandById(id: number): Observable<SingleResponseModel<Brand>> {
-    let newPath = this.apiUrl + 'getbyid?id=' + id;
+    let newPath = this.apiUrl + 'brands/getbyid?id=' + id;
     return this.httpClient.get<SingleResponseModel<Brand>>(newPath);
   }
 
   addBrand(brand: Brand): Observable<ResponseModel> {
-    return this.httpClient.post<ResponseModel>(this.apiUrl + 'add', brand);
+    return this.httpClient.post<ResponseModel>(this.apiUrl + 'brands/add', brand);
   }
   updateBrand(brand: Brand): Observable<ResponseModel> {
-    return this.httpClient.post<ResponseModel>(this.apiUrl + 'update', brand);
+    return this.httpClient.post<ResponseModel>(this.apiUrl + 'brands/update', brand);
   }
   deleteBrand(brand: Brand): Observable<ResponseModel> {
-    return this.httpClient.post<ResponseModel>(this.apiUrl + 'delete', brand);
+    return this.httpClient.post<ResponseModel>(this.apiUrl + 'brands/delete', brand);
   }
 }

@@ -1,0 +1,103 @@
+<table class="table">
+  <thead class="table-light">
+    <tr>
+      <th scope="col">Brand</th>
+      <th scope="col">Name</th>
+      <th scope="col">Color</th>
+      <th scope="col">Year</th>
+      <th scope="col">Total Price</th>
+      <th scope="col">Clear Cart</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngIf="car">
+      <td>{{ car.brandName }}</td>
+      <td>{{ car.carName }}</td>
+      <td>{{ car.colorName }}</td>
+      <td>{{ car.modelYear }}</td>
+      <td>{{ totalPrice | vatAdded: 18 | currency }}</td>
+      <td>
+        <button style="margin-top: -5px" (click)="removeFromCart(car)" class="btn btn-danger">
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<div>
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="title" style="align-self: center;">ReCap Payment</h5>
+      </div>
+      <div id="cont" class="row justify-content-center mb-1 radio-group">
+        <div class="col-sm-2 col-3">
+          <div class='radio  mx-2' data-value="dk"> <img class="fit-image" src="https://i.imgur.com/5TqiRQV.jpg"
+              width="105px" height="55px"> </div>
+        </div>
+        <div class="col-sm-2 col-3">
+          <div class='radio mx-2' data-value="visa"> <img class="fit-image" src="https://i.imgur.com/OdxcctP.jpg"
+              width="105px" height="55px"> </div>
+        </div>
+        <div class="col-sm-2 col-3">
+          <div class='radio mx-2' data-value="master"> <img class="fit-image" src="https://i.imgur.com/WIAP9Ku.jpg"
+              width="105px" height="55px"> </div>
+        </div>
+        <div class="col-sm-2 col-3">
+          <div class='radio mx-2' data-value="paypal"> <img class="fit-image" src="https://i.imgur.com/cMk1MtK.jpg"
+              width="105px" height="55px"> </div>
+        </div> <br>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="paymentAddForm">
+          <div class="mb-3">
+            <label for="Name & Surname">Name & Surname</label>
+            <div class="form-group">
+              <input type="text" id="Name & Surname" class="form-control" placeholder="Name & Surname" />
+            </div>
+          </div>
+
+
+
+          <div class="mb-3">
+            <label for="creditCardNumber">Card Number</label>
+            <div class="form-group">
+              <input type="string" id="creditCardNumber" formControlName="creditCardNumber" class="form-control"
+                placeholder="Credit Card Number" minlength="16" maxlength="16" />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="expirationDate">Expiration Date</label>
+            <div class="form-group">
+              <input type="text" id="expirationDate" formControlName="expirationDate" class="form-control"
+                placeholder="MM/YY" minlength="4" maxlength="5" />
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="securityCode">CVV</label>
+            <div class="form-group">
+              <input type="text" id="securityCode" formControlName="securityCode" class="form-control"
+                placeholder="&#9679;&#9679;&#9679;" minlength="3" maxlength="3" />
+            </div>
+          </div>
+
+
+
+
+
+        </form>
+      </div>
+      <div class="card-footer">
+        <button (click)="paymentForRent()" class="btn btn-pay placeicon"
+          style="margin-left: 375px; width: fit-content; height: fit-content;">
+          Pay {{ totalPrice | vatAdded: 18 | currency }}
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+</div>

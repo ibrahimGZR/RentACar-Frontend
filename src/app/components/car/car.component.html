@@ -1,30 +1,74 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th>Car Id</th>
-      <th>Brand Id</th>
-      <th>Color Id</th>
-      <th>Car Name</th>
-      <th>Brand Name</th>
-      <th>Color Name</th>
-      <th>Model Year</th>
-      <th>Daily Price</th>
-      <th>Description</th>
-      <th>ImagePath</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let carDetail of carsDetails">
-      <td>{{carDetail.carId}}</td>
-      <td>{{carDetail.brandId}}</td>
-      <td>{{carDetail.colorId}}</td>
-      <td>{{carDetail.carName}}</td>
-      <td>{{carDetail.brandName}}</td>
-      <td>{{carDetail.colorName}}</td>
-      <td>{{carDetail.modelYear}}</td>
-      <td>{{carDetail.dailyPrice}}</td>
-      <td>{{carDetail.description}}</td>
-      <td>{{carDetail.carImage}}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="row">
+
+  <div class="mb-3">
+    <input type="text" [(ngModel)]="filterText" class="form-control" id="filterText" placeholder="Rent a car">
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <select [(ngModel)]="filterBrandId" class="form-select" aria-placeholder="Brands">
+        <option value=0>Brands</option>
+        <option *ngFor="let brand of brands" [value]="brand.brandId" [selected]="getSelectedBrand(brand.brandId)">
+          {{brand.brandName}}</option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <select [(ngModel)]="filterColorId" class="form-select" aria-label="Colors">
+        <option value=0>Colors</option>
+        <option *ngFor="let color of colors" [value]="color.colorId" [selected]="getSelectedColor(color.colorId)">
+          {{color.colorName}}</option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <button id="filt1" routerLink="/cars/brand/{{filterBrandId}}/color/{{filterColorId}}" type="button"
+          class="btn btn-danger">
+          Filter
+        </button>
+        <button id="filt2" routerLink="/cars" type="button" class="btn btn-dark">Clear</button>
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+  <div id="spin" *ngIf="dataLoaded == false" class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+
+
+  <div *ngFor="let car of cars | filterPipe:filterText" class="col-lg-4 col-md-5">
+
+    <div class="card border-0 mb-1" style="width: 18rem">
+      <img routerLink="/cars/cardetail/{{ car.carId }}" *ngIf="car.carImage" [src]="defaultPath+car.carImage"
+        class="card-img-top" style="object-fit: cover;" width="100" height="160" alt="...">
+
+      <img *ngIf="!car.carImage" [src]="defaultPath+'/images/logo.jpg'" class="card-img-top" style="object-fit: cover;"
+        width="100" height="160" alt="...">
+
+
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <span class="float-start">Name</span>
+          <span class="float-end">{{ car.carName | uppercase }}</span>
+        </li>
+        <li class="list-group-item">
+          <span class="float-start">Model</span>
+          <span class="float-end">{{ car.modelYear }}</span>
+        </li>
+        <p class="card-text text-center h5 mt-3">
+          {{ car.dailyPrice | vatAdded: 18 | currency }}</p>
+      </ul>
+      <div class="card-body">
+        <div class="d-flex action justify-content-between">
+
+
+          <app-rental-add [car] = "car"></app-rental-add>
+
+
+          <a routerLink="/cars/cardetail/{{ car.carId }}" class="btn btn-primary">Details</a>
+        </div>
+
+
+      </div>
+    </div>
+
+  </div>

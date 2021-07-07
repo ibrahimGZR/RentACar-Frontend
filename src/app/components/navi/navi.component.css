@@ -1,0 +1,39 @@
+#logo{
+
+  margin-left: 30px;
+}
+#Start{
+  float:left;
+  margin-left: 90px;
+
+}
+#Login{
+  float: right;
+}
+#Home{
+  margin-left: 130px;
+}
+#nav{
+  color: white;
+}
+#cartlogo{
+  margin-bottom: 5px;
+}
+#cart{
+  float: right;
+  width: 80px;
+  margin-right: 10px;
+}
+a {
+  color: black;
+  text-decoration: none;
+  background-color: transparent;
+  -webkit-text-decoration-skip: objects;
+}
+.dropdown-menu > li > a {
+  color: black;
+}
+
+.dropdown-menu > li > a:hover {
+  background-color: rgba(248, 206, 206, 0.89);
+}

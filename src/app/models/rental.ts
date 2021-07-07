@@ -1,7 +1,10 @@
+import { Car } from "./car";
+import { Customer } from "./customer";
+
 export interface Rental {
   id: number;
-  carId: number;
-  customerId: number;
+  carDto:Car;
+  customerDto:Customer;
   rentDate: Date;
   returnDate: Date;
 }
